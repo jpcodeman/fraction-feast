@@ -1,0 +1,111 @@
+:root{--bg1:#fff4fb;--bg2:#eafaff;--bg3:#fefff0;--pink:#ffd9ec;--pink2:#ff9dcb;--blue:#cdeeff;--blue2:#7cc7ef;--yellow:#fff3bf;--green:#d5f6d0;--green2:#8fdd8a;--purple:#e8ddff;--ink:#4a4363;--soft:#7d7695;--shadow:0 10px 24px rgba(120,110,160,.18);--safeT:env(safe-area-inset-top,0px);--safeB:env(safe-area-inset-bottom,0px)}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%;font-family:ui-rounded,'SF Pro Rounded',system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));user-select:none;overscroll-behavior:none}button{font:inherit;border:0;color:inherit;cursor:pointer}#app{max-width:1000px;margin:auto;padding:calc(18px + var(--safeT)) 18px calc(28px + var(--safeB))}.mute-btn{position:fixed;right:14px;top:calc(12px + var(--safeT));width:52px;height:52px;border-radius:50%;background:white;box-shadow:var(--shadow);font-size:1.5rem;z-index:20}.hero{text-align:center}.hero h1{font-size:clamp(2.7rem,8vw,4.2rem);margin:4px 0 0;background:linear-gradient(90deg,var(--pink2),var(--blue2),var(--green2));color:transparent;background-clip:text}.hero p{color:var(--soft);margin:0}.truck{font-size:4.8rem;margin:8px}.section{font-size:1.3rem;font-weight:700;margin:24px 5px 10px}.worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}.world{background:#fff;border-radius:26px;padding:16px;text-align:center;box-shadow:var(--shadow);min-height:155px}.world:nth-child(5n+1){background:linear-gradient(160deg,#fff,var(--pink))}.world:nth-child(5n+2){background:linear-gradient(160deg,#fff,var(--blue))}.world:nth-child(5n+3){background:linear-gradient(160deg,#fff,var(--green))}.world:nth-child(5n+4){background:linear-gradient(160deg,#fff,var(--purple))}.world:nth-child(5n){background:linear-gradient(160deg,#fff,var(--yellow))}.world .emoji{font-size:2.6rem}.world h3{margin:3px}.world small{color:var(--soft)}.stars{font-weight:700;margin-top:8px}.stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.pill{background:#fff;border-radius:20px;padding:12px 20px;box-shadow:var(--shadow);text-align:center}.pill b{font-size:1.7rem;display:block}.play{min-height:calc(100svh - 50px);display:flex;flex-direction:column}.head{display:flex;align-items:center;gap:12px}.head h2{margin:0}.back{background:#fff;border-radius:18px;padding:12px 17px;box-shadow:0 5px 0 rgba(0,0,0,.06)}.grow{flex:1}.order{background:#fff;border-radius:28px;padding:18px;box-shadow:var(--shadow);text-align:center;margin:14px auto;width:min(760px,100%)}.customer{font-size:4rem}.speech{font-size:clamp(1.3rem,3vw,2rem);font-weight:700}.sub{color:var(--soft)}.counter{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;flex:1;min-height:0}.prep,.choices{background:rgba(255,255,255,.72);border-radius:28px;padding:18px;box-shadow:var(--shadow)}.food{display:grid;place-items:center;min-height:250px}.fraction-grid{display:grid;width:min(360px,80%);aspect-ratio:1;border-radius:50%;overflow:hidden;border:7px solid #e5a557;background:#fff}.piece{border:1px solid rgba(74,67,99,.18);background:#ffe4a8;display:grid;place-items:center;font-size:1.6rem}.piece.on{background:#ffb96b}.bar{border-radius:24px;aspect-ratio:2/1;grid-template-columns:repeat(var(--den),1fr)}.bar .piece{border-radius:0}.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.chip{background:var(--blue);padding:12px 17px;border-radius:18px;font-weight:700;box-shadow:0 5px 0 rgba(0,0,0,.06)}.chip.active{background:var(--purple)}.serve{background:var(--green);padding:15px 26px;border-radius:20px;font-size:1.2rem;font-weight:700;box-shadow:0 6px 0 rgba(0,0,0,.06);margin-top:12px}.choices{display:flex;flex-direction:column;justify-content:center;gap:12px}.choice{background:var(--blue);border-radius:20px;padding:17px;font-size:1.25rem;font-weight:700;box-shadow:0 5px 0 rgba(0,0,0,.06)}.choice.good{background:var(--green2);color:#fff}.choice.bad{background:#ffd7d7}.progress{height:18px;background:#fff;border-radius:20px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:linear-gradient(90deg,var(--green2),var(--blue2));transition:.3s}.overlay{position:fixed;inset:0;background:rgba(74,67,99,.35);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px;z-index:30}.modal{width:min(500px,100%);background:#fff;border-radius:30px;padding:25px;text-align:center;box-shadow:0 24px 60px rgba(74,67,99,.35)}.visual{font-size:1.4rem;letter-spacing:3px;background:#f7f3fb;border-radius:18px;padding:14px;margin:12px}.upgrade{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.upgrade button{background:var(--yellow);border-radius:18px;padding:14px}.locked{opacity:.45;filter:grayscale(1)}@media(max-width:720px){.counter{grid-template-columns:1fr}.food{min-height:200px}.choices{min-height:150px}}@media(display-mode:standalone){body{min-height:100svh}}
+
+/* ---------- Fraction Feast v2 gameplay ---------- */
+.truck-art { display:grid; place-items:center; height:120px; margin-top:2px; }
+.truck-art img { width:min(250px,72vw); max-height:120px; object-fit:contain; filter:drop-shadow(0 8px 10px rgba(74,67,99,.14)); }
+.pill span { display:block; color:var(--soft); font-size:.82rem; margin-top:2px; }
+.world.tint0{background:linear-gradient(160deg,#fff,var(--pink))}.world.tint1{background:linear-gradient(160deg,#fff,var(--blue))}.world.tint2{background:linear-gradient(160deg,#fff,var(--green))}.world.tint3{background:linear-gradient(160deg,#fff,var(--purple))}.world.tint4{background:linear-gradient(160deg,#fff,var(--yellow))}
+.world { transition:transform .09s ease; }
+.world:active,.upgrade-card:active,.visual-choice:active,.compare-card:active,.order-pick:active,.number-choice:active { transform:scale(.97); }
+.upgrade-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.upgrade-card { display:flex; min-height:108px; flex-direction:column; align-items:center; justify-content:center; gap:3px; border-radius:20px; padding:12px; background:#f3f0f7; box-shadow:var(--shadow); opacity:.58; filter:grayscale(.65); }
+.upgrade-card.owned { background:linear-gradient(160deg,#fff,var(--yellow)); opacity:1; filter:none; }
+.upgrade-card small { color:var(--soft); }.upgrade-emoji{font-size:2rem}.small-actions{text-align:center;margin:20px}.link-btn{background:none;text-decoration:underline;color:var(--soft);padding:10px}
+
+#app.play-mode { max-width:1100px; }
+.play-screen { min-height:calc(100svh - 46px); display:flex; flex-direction:column; }
+.play-header { display:flex; align-items:center; gap:12px; }
+.play-header h2 { margin:0; font-size:clamp(1.15rem,2.3vw,1.5rem); }.play-header small{color:var(--soft)}
+.back-btn { background:#fff; min-width:52px; min-height:52px; border-radius:18px; box-shadow:0 5px 0 rgba(0,0,0,.06); font-size:1.35rem; }
+.coin-count { font-weight:700; white-space:nowrap; }.grow{flex:1}
+.order-card { position:relative; width:min(780px,100%); margin:10px auto 12px; padding:13px 18px; border-radius:25px; background:#fff; box-shadow:var(--shadow); text-align:center; }
+.order-card.special-order { outline:4px solid var(--yellow); }.special-badge{font-size:.78rem;font-weight:800;color:#a27a19;letter-spacing:.04em;margin-bottom:3px}
+.customer { font-size:3.1rem; line-height:1; }.speech{font-size:clamp(1.2rem,2.7vw,1.8rem);font-weight:700;margin-top:4px}.order-count{color:var(--soft);font-size:.86rem;margin-top:5px}
+.game-counter { flex:1; min-height:0; display:grid; place-items:stretch; }
+.work-card { width:min(900px,100%); margin:0 auto; background:rgba(255,255,255,.76); border-radius:28px; padding:18px; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
+.big-work{justify-content:flex-start}.skill-hint{text-align:center;color:var(--soft);padding:10px 8px 2px;font-size:.92rem}
+.visual-question-title{font-weight:700;font-size:1.25rem}.visual-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%}
+.visual-choice,.compare-card,.order-pick { background:#fff; border-radius:22px; padding:16px; box-shadow:0 6px 0 rgba(0,0,0,.06); transition:.08s; min-height:118px; }
+.visual-choice.good,.compare-card.good,.order-tray.good,.number-choice.good,.serve-btn.good{background:var(--green2)!important;color:#fff}.visual-choice.bad,.compare-card.bad,.order-tray.bad,.number-choice.bad,.serve-btn.bad{animation:shake .35s;background:#ffd7d7!important}
+.option-visual{display:flex;flex-direction:column;gap:9px;align-items:center}.option-visual b{font-size:1.25rem}
+.fraction-bar{display:grid;grid-template-columns:repeat(var(--den),1fr);width:min(310px,100%);height:58px;border:4px solid #ded7ec;border-radius:15px;overflow:hidden;background:#fff}
+.bar-cell{border-right:2px solid #ded7ec;background:#fff}.bar-cell:last-child{border-right:0}.bar-cell.filled{background:linear-gradient(180deg,#ffcf79,#ffb45c)}
+.equiv-source{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;font-size:1.15rem}.equals-mark{font-size:1.8rem;font-weight:800;color:var(--soft)}
+.compare-layout{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.compare-card{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}.compare-card b{font-size:1.4rem}.mini-customer{font-size:2.7rem}.versus{font-weight:900;color:var(--soft)}
+.order-tray{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;padding:12px;border-radius:20px;background:#f4eefb;transition:.2s}.order-tray>span{display:grid;place-items:center;min-height:56px;border:2px dashed #d9cbed;border-radius:14px;color:var(--soft);font-weight:700}.order-tray .tray-filled{background:#fff;border-style:solid;color:var(--ink);font-size:1.15rem}
+.order-picks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%}.order-pick{display:flex;flex-direction:column;align-items:center;gap:8px}.order-pick.picked{opacity:.28;transform:scale(.94)}
+.operation-visual{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;width:100%}.operation-visual>div:not(.operation-symbol){display:flex;flex-direction:column;align-items:center;gap:8px}.operation-symbol{font-size:2rem;font-weight:800}
+.choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:min(600px,100%)}.number-choice{background:var(--blue);border-radius:20px;padding:18px;font-size:1.45rem;font-weight:800;box-shadow:0 6px 0 rgba(0,0,0,.06)}
+.build-area{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px}.pizza-build{display:grid;grid-template-columns:repeat(var(--den),1fr);width:min(620px,96%);height:150px;border:7px solid #e4a256;border-radius:28px;overflow:hidden;background:#fff}.pizza-slice{position:relative;background:#fff0c7;border-right:2px solid #e8bb7d;display:grid;place-items:center}.pizza-slice:last-child{border-right:0}.pizza-slice.selected{background:#ffc76e}.pizza-slice span{font-size:clamp(1.2rem,3.7vw,2.2rem)}.built-label{font-size:1.15rem}.denom-label{font-weight:700}.chip-row{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.chip{background:var(--blue);padding:11px 15px;border-radius:17px;font-weight:700;box-shadow:0 5px 0 rgba(0,0,0,.06)}.chip.active{background:var(--purple);outline:3px solid #cbb3fb}
+.serve-btn,.secondary-btn{padding:14px 24px;border-radius:19px;font-size:1.08rem;font-weight:800;box-shadow:0 6px 0 rgba(0,0,0,.06)}.serve-btn{background:var(--green)}.secondary-btn{background:#fff;color:var(--soft)}
+.mixed-build{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%}.cake-unit{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:18px;padding:11px}.cake-unit .fraction-bar{height:48px}.cake-unit small{color:var(--soft)}.mixed-controls{display:flex;align-items:center;gap:16px}.round-control{width:58px;height:58px;border-radius:50%;background:var(--blue);font-size:1.7rem;font-weight:800;box-shadow:0 5px 0 rgba(0,0,0,.06)}.mixed-count{min-width:115px;text-align:center}.mixed-count b,.mixed-count span{display:block}.mixed-count b{font-size:1.45rem}.mixed-count span{color:var(--soft)}
+.teaching-card p{line-height:1.45}.teach-bulb{font-size:3rem}.teach-visual{display:flex;align-items:center;justify-content:center;gap:10px;background:#f7f3fb;border-radius:18px;padding:13px;margin:12px 0}.teach-visual .option-visual{flex:1}.teach-tip{background:var(--yellow);border-radius:15px;padding:10px}.teach-vs,.teach-equals{font-weight:800;color:var(--soft);font-size:1.3rem}
+.finish-screen{min-height:80svh;display:grid;place-items:center}.finish-card{width:min(520px,100%);background:#fff;border-radius:30px;box-shadow:var(--shadow);padding:32px;text-align:center}.finish-emoji{font-size:3.5rem}.bonus{display:inline-block;background:var(--yellow);padding:9px 15px;border-radius:999px;font-weight:800}.finish-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.toast-message{position:fixed;left:50%;bottom:calc(24px + var(--safeB));transform:translate(-50%,18px);opacity:0;z-index:100;background:#fff;padding:11px 18px;border-radius:999px;box-shadow:var(--shadow);font-weight:800;transition:.2s;pointer-events:none;white-space:nowrap}.toast-message.show{opacity:1;transform:translate(-50%,0)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+
+@media(max-width:720px){
+  .upgrade-grid{grid-template-columns:repeat(2,1fr)}
+  .compare-layout{grid-template-columns:1fr}.versus{padding:0}.compare-card{width:100%}
+  .operation-visual{grid-template-columns:1fr}.operation-symbol{line-height:.7}
+  .order-picks{grid-template-columns:1fr}.order-pick{min-height:90px}
+  .mixed-build{grid-template-columns:1fr 1fr}.visual-options{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){.visual-options{grid-template-columns:1fr}.upgrade-grid{grid-template-columns:1fr 1fr}.pizza-build{height:120px}}
+@media(min-width:740px) and (orientation:landscape){.order-card{padding:10px 16px}.customer{font-size:2.7rem}.work-card{min-height:310px}.skill-hint{padding-bottom:0}}
+
+/* ---------- v3 visual fraction refinements ---------- */
+.coin-icon{
+  display:inline-grid;place-items:center;width:1.05em;height:1.05em;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#fff6a9 0 12%,#ffd75d 28%,#e9a62d 72%,#c98518 100%);
+  border:.09em solid #c8871d;box-shadow:inset 0 0 0 .08em rgba(255,255,255,.42),0 .08em .12em rgba(92,63,20,.18);
+  color:#fff8c6;font-size:.8em;line-height:1;vertical-align:.08em;text-shadow:0 1px 0 rgba(134,82,0,.35)
+}
+.upgrade-card small .coin-icon,.bonus .coin-icon{font-size:.9em}
+
+/* Circular fraction art used by pizza, pancakes and cakes. */
+.fraction-circle-wrap{display:flex;flex-direction:column;align-items:center;gap:7px}
+.fraction-circle{width:min(180px,34vw);aspect-ratio:1;overflow:visible;filter:drop-shadow(0 5px 5px rgba(74,67,99,.12))}
+.circle-slice{fill:#fff;stroke:#ded7ec;stroke-width:1.7;vector-effect:non-scaling-stroke}
+.circle-slice.filled{fill:#ffca73}
+.circle-outline{fill:none;stroke:#d6cce6;stroke-width:3;vector-effect:non-scaling-stroke;pointer-events:none}
+.fraction-circle-wrap.pizza .circle-slice{fill:#fff2cb;stroke:#e3a85d}.fraction-circle-wrap.pizza .circle-slice.filled{fill:#ffc565}
+.fraction-circle-wrap.pancake .circle-slice{fill:#fff8dd;stroke:#dba85b}.fraction-circle-wrap.pancake .circle-slice.filled{fill:#eeb85e}
+.fraction-circle-wrap.cake .circle-slice{fill:#fff4fb;stroke:#e0b2ca}.fraction-circle-wrap.cake .circle-slice.filled{fill:#ffb9d9}
+.pizza-pepper{fill:#d85b58;stroke:#a84442;stroke-width:.5;pointer-events:none}.butter-pat{fill:#fff0a2;stroke:#e7bd50;stroke-width:1;pointer-events:none}
+
+/* Pizza Pier: choose unlabeled visual cuts, then fill a circular pizza. */
+.cut-choice{width:88px;height:88px;padding:6px;border-radius:20px;background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.06);transition:.08s}
+.cut-choice .fraction-circle{width:70px}.cut-choice.active{background:var(--purple);outline:3px solid #cbb3fb}.cut-choice:active{transform:translateY(3px)}
+.pizza-builder{width:min(310px,62vw);aspect-ratio:1;filter:drop-shadow(0 7px 7px rgba(74,67,99,.14));touch-action:manipulation}
+.pizza-build-slice{fill:#fff1c6;stroke:#e7a657;stroke-width:1.6;cursor:pointer}.pizza-build-slice.selected{fill:#ffc361}.pizza-builder-outline{fill:none;stroke:#d78e36;stroke-width:4;pointer-events:none}
+.pizza-placeholder{width:min(310px,62vw);aspect-ratio:1;border-radius:50%;background:#fff5d8;border:7px dashed #e3b876;display:grid;place-items:center;align-content:center;gap:8px;font-size:5rem;color:var(--soft)}
+.pizza-placeholder span{font-size:1rem;font-weight:700}.built-label{color:var(--soft);font-weight:700}
+
+/* Pancake comparison uses equal-sized circles. */
+.compare-card .fraction-circle{width:min(210px,30vw)}
+
+/* Taco Town is intentionally symbolic: the fraction is the primary visual. */
+.numeric-order-pick{min-height:128px;display:grid;place-items:center;background:linear-gradient(160deg,#fff,var(--yellow))}
+.fraction-number{font-size:clamp(2.25rem,7vw,4rem);line-height:1;letter-spacing:.02em}
+.order-tray .tray-filled{font-size:clamp(1.25rem,3vw,1.7rem);font-weight:800}
+
+/* Cookie Café and Waffle Works share a tray, but the food pieces are visually distinct. */
+.food-tray{width:min(360px,100%);min-height:128px;padding:12px;border:8px solid #c7b7a2;border-radius:22px;background:linear-gradient(145deg,#e7dccd,#cdbca7);display:grid;grid-template-columns:repeat(var(--den),minmax(26px,1fr));gap:5px;align-items:center;box-shadow:inset 0 3px 8px rgba(70,50,35,.14),0 5px 8px rgba(74,67,99,.10)}
+.tray-slot{min-width:0;aspect-ratio:1;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.24)}
+.tray-slot:not(.filled){outline:2px dashed rgba(105,82,63,.18);outline-offset:-4px}
+.cookie-piece{position:relative;width:82%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 28%,#e9b873,#c98442 72%);box-shadow:inset -3px -4px 0 rgba(128,71,27,.12),0 2px 2px rgba(79,47,24,.16);opacity:.18}
+.tray-slot.filled .cookie-piece{opacity:1}.chip-dot{position:absolute;width:10%;aspect-ratio:1;border-radius:50%;background:#6f432d}.chip-0{left:24%;top:20%}.chip-1{left:60%;top:25%}.chip-2{left:42%;top:48%}.chip-3{left:23%;top:63%}.chip-4{left:67%;top:62%}.chip-5{left:50%;top:75%}
+.waffle-piece{width:84%;aspect-ratio:1;border-radius:9px;background-color:#e9b553;background-image:linear-gradient(rgba(142,88,24,.26) 2px,transparent 2px),linear-gradient(90deg,rgba(142,88,24,.26) 2px,transparent 2px);background-size:22% 22%;box-shadow:inset -3px -3px 0 rgba(125,78,20,.13),0 2px 2px rgba(79,47,24,.14);opacity:.16}
+.tray-slot.filled .waffle-piece{opacity:1}.operation-visual>div:not(.operation-symbol)>b{font-size:1.25rem}
+
+/* Party Catering: round cakes, with no mixed-number answer echoed beside the controls. */
+.cake-unit{background:#fff;border-radius:22px;padding:10px;min-width:0}.cake-unit .fraction-circle{width:min(190px,24vw)}
+.mixed-count{min-width:145px}.mixed-count b{font-size:1.05rem;color:var(--soft)}
+
+@media(max-width:720px){
+  .cut-choice{width:72px;height:72px}.cut-choice .fraction-circle{width:56px}
+  .food-tray{grid-template-columns:repeat(var(--den),minmax(20px,1fr));min-height:100px;padding:9px;gap:3px;border-width:6px}
+  .compare-card .fraction-circle{width:min(190px,52vw)}
+  .cake-unit .fraction-circle{width:min(170px,38vw)}
+}
