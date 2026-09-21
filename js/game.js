@@ -463,7 +463,7 @@
         </section>
       `);
       let denominator = null;
-      let selected = 0;
+      let filled = new Set();
       const denoms = [2, 3, 4, 6, 8];
       const build = document.getElementById('pizzaBuild');
       const choices = document.getElementById('denomChoices');
@@ -475,7 +475,7 @@
           return;
         }
         const slices = Array.from({ length: denominator }, (_, i) =>
-          `<path d="${sectorPath(i, denominator, 44)}" class="pizza-build-slice ${i < selected ? 'selected' : ''}" data-slice="${i}"/>`
+          `<path d="${sectorPath(i, denominator, 44)}" class="pizza-build-slice ${filled.has(i) ? 'selected' : ''}" data-slice="${i}"/>`
         ).join('');
         build.innerHTML = `
           <svg class="pizza-builder" viewBox="0 0 100 100" aria-label="Pizza cut into equal slices">
@@ -488,7 +488,8 @@
         build.querySelectorAll('[data-slice]').forEach((b) => {
           b.addEventListener('click', () => {
             const i = Number(b.dataset.slice);
-            selected = i < selected ? i : i + 1;
+            if (filled.has(i)) filled.delete(i);
+            else filled.add(i);
             draw();
           });
         });
@@ -499,15 +500,15 @@
       choices.querySelectorAll('button').forEach((b) => {
         b.addEventListener('click', () => {
           denominator = Number(b.dataset.den);
-          selected = 0;
+          filled = new Set();
           draw();
         });
       });
       draw();
 
       document.getElementById('serveBtn').addEventListener('click', (e) => {
-        if (denominator && sameFraction([selected, denominator], problem.target)) success(e.currentTarget);
-        else wrong(e.currentTarget, problem, denominator ? `You served <b>${selected}/${denominator}</b>, but the order was <b>${fracLabel(problem.target)}</b>.` : 'Choose how to cut the pizza first.');
+        if (denominator && sameFraction([filled.size, denominator], problem.target)) success(e.currentTarget);
+        else wrong(e.currentTarget, problem, denominator ? `You served <b>${filled.size}/${denominator}</b>, but the order was <b>${fracLabel(problem.target)}</b>.` : 'Choose how to cut the pizza first.');
       });
     }
 
