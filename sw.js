@@ -1,7 +1,7 @@
-const CACHE = 'fraction-feast-v3';
+const CACHE = 'fraction-feast-v4';
 const ASSETS = [
   './', './index.html', './css/styles.css', './js/game.js', './js/audio.js',
-  './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png',
+  './manifest.webmanifest', './assets/welcome.png', './icons/icon.svg', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-512-maskable.png', './icons/apple-touch-icon.png',
   './sprites/chef-girl.svg', './sprites/truck.svg'
 ];

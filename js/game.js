@@ -95,15 +95,39 @@
     return [1 + rand(d - 1), d];
   }
 
-  function home() {
-    app.className = '';
+  function setScreen(mode) {
+    document.body.classList.toggle('welcome-active', mode === 'welcome');
+    app.className = mode === 'welcome' ? 'welcome-mode' : '';
+  }
+
+  function renderWelcome() {
+    setScreen('welcome');
+    app.innerHTML = `
+      <main class="welcome-screen" aria-label="Fraction Feast main menu">
+        <div class="welcome-art-wrap">
+          <img class="welcome-art" src="assets/welcome.png" alt="Fraction Feast food truck adventure with animal customers and fraction foods">
+          <button class="welcome-hotspot random-hotspot" id="randomLevelBtn" aria-label="Play a random level"><span>Random Level</span></button>
+          <button class="welcome-hotspot map-hotspot" id="welcomeMapBtn" aria-label="Open the map"><span>Map</span></button>
+          <button class="welcome-hotspot collection-hotspot" id="welcomeCollectionBtn" aria-label="Open My Collection"><span>My Collection</span></button>
+          <button class="welcome-hotspot sound-hotspot" id="welcomeSoundBtn" aria-label="Toggle music"><span>Toggle music</span></button>
+        </div>
+      </main>
+    `;
+    document.getElementById('randomLevelBtn').addEventListener('click', () => playWorld(rand(WORLDS.length)));
+    document.getElementById('welcomeMapBtn').addEventListener('click', renderMap);
+    document.getElementById('welcomeCollectionBtn').addEventListener('click', renderCollection);
+    document.getElementById('welcomeSoundBtn').addEventListener('click', () => muteBtn.click());
+    window.scrollTo(0, 0);
+  }
+
+  function renderMap() {
+    setScreen('map');
     const totalStars = Object.values(state.worlds).reduce((sum, n) => sum + Number(n || 0), 0);
     app.innerHTML = `
-      <section class="hero">
-        <div class="truck-art"><img src="sprites/truck.svg" alt="Fraction Feast food truck"></div>
-        <h1>Fraction Feast</h1>
-        <p>Cook • Learn • Serve!</p>
-      </section>
+      <div class="page-topbar">
+        <button id="welcomeBtn" class="back-btn" aria-label="Back to welcome screen">←</button>
+        <div class="page-title"><span>🗺️</span><div><h1>Fraction Feast Map</h1><p>Choose where the food truck goes next!</p></div></div>
+      </div>
 
       <div class="stats">
         <div class="pill"><b>${coinMarkup()} ${state.coins}</b><span>coins</span></div>
@@ -123,46 +147,72 @@
           </button>`;
         }).join('')}
       </div>
-
-      <div class="section">✨ Truck Upgrades</div>
-      <div class="upgrade-grid">
-        ${UPGRADES.map((u, i) => {
-          const owned = state.upgrades.includes(i);
-          return `<button class="upgrade-card ${owned ? 'owned' : ''}" data-upgrade="${i}">
-            <span class="upgrade-emoji">${u[0]}</span>
-            <b>${u[1]}</b>
-            <small>${owned ? 'Owned ✓' : coinMarkup() + ' 30'}</small>
-          </button>`;
-        }).join('')}
-      </div>
-      <div class="small-actions"><button id="resetBtn" class="link-btn">Reset progress</button></div>
     `;
 
+    document.getElementById('welcomeBtn').addEventListener('click', renderWelcome);
     app.querySelectorAll('[data-world]').forEach((b) => {
       b.addEventListener('click', () => playWorld(Number(b.dataset.world)));
     });
+    window.scrollTo(0, 0);
+  }
 
+  function renderCollection() {
+    setScreen('collection');
+    const ownedCount = state.upgrades.length;
+    app.innerHTML = `
+      <div class="page-topbar">
+        <button id="collectionBackBtn" class="back-btn" aria-label="Back to welcome screen">←</button>
+        <div class="page-title"><span>🎁</span><div><h1>My Collection</h1><p>Decorate the truck with treasures you earn!</p></div></div>
+        <div class="collection-coins">${coinMarkup()} ${state.coins}</div>
+      </div>
+
+      <div class="collection-summary">
+        <div class="collection-truck"><img src="sprites/truck.svg" alt="Fraction Feast food truck"></div>
+        <div><b>${ownedCount} / ${UPGRADES.length}</b><span> treasures collected</span></div>
+      </div>
+
+      <div class="section">💖 Your Treasures</div>
+      <div class="upgrade-grid collection-grid">
+        ${UPGRADES.map((u, i) => {
+          const owned = state.upgrades.includes(i);
+          return `<button class="upgrade-card ${owned ? 'owned' : ''}" data-upgrade="${i}">
+            <span class="upgrade-emoji">${owned ? u[0] : '❓'}</span>
+            <b>${owned ? u[1] : 'Mystery Treasure'}</b>
+            <small>${owned ? 'Collected ✓' : coinMarkup() + ' 30 to unlock'}</small>
+          </button>`;
+        }).join('')}
+      </div>
+      <p class="collection-tip">Tap a mystery treasure to buy it for ${coinMarkup()} 30.</p>
+      <div class="small-actions"><button id="resetBtn" class="link-btn">Reset progress</button></div>
+    `;
+
+    document.getElementById('collectionBackBtn').addEventListener('click', renderWelcome);
     app.querySelectorAll('[data-upgrade]').forEach((b) => {
       b.addEventListener('click', () => {
         const i = Number(b.dataset.upgrade);
-        if (state.upgrades.includes(i)) return;
+        if (state.upgrades.includes(i)) {
+          toast(`${UPGRADES[i][1]} is already in your collection!`);
+          return;
+        }
         if (state.coins < 30) {
-          toast('You need 30 coins for that upgrade!');
+          toast('You need 30 coins for that treasure!');
           return;
         }
         state.coins -= 30;
         state.upgrades.push(i);
         saveState();
-        home();
+        if (window.Music) Music.chime('good');
+        renderCollection();
+        toast(`You unlocked ${UPGRADES[i][0]} ${UPGRADES[i][1]}!`);
       });
     });
 
     document.getElementById('resetBtn').addEventListener('click', () => {
       if (confirm('Reset all Fraction Feast progress?')) {
         const muted = state.muted;
-        state = Object.assign({}, DEFAULT_STATE, { muted });
+        state = { coins: 0, served: 0, worlds: {}, upgrades: [], muted };
         saveState();
-        home();
+        renderCollection();
       }
     });
     window.scrollTo(0, 0);
@@ -391,6 +441,7 @@
 
     function shell(problem, bodyHtml) {
       const boss = session.round === 4 || session.round === 8;
+      document.body.classList.remove('welcome-active');
       app.className = 'play-mode';
       app.innerHTML = `
         <div class="play-screen">
@@ -414,7 +465,7 @@
           <div class="skill-hint">💡 ${problem.hint}</div>
         </div>
       `;
-      document.getElementById('backBtn').addEventListener('click', home);
+      document.getElementById('backBtn').addEventListener('click', renderMap);
     }
 
     function success(button) {
@@ -744,14 +795,14 @@
         </div>
       `;
       document.getElementById('againBtn').addEventListener('click', () => playWorld(worldIndex));
-      document.getElementById('mapBtn').addEventListener('click', home);
+      document.getElementById('mapBtn').addEventListener('click', renderMap);
     }
 
     nextRound();
   }
 
   if (window.Music) Music.setEnabled(!state.muted);
-  home();
+  renderWelcome();
 
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', () => {

@@ -109,3 +109,130 @@
   .compare-card .fraction-circle{width:min(190px,52vw)}
   .cake-unit .fraction-circle{width:min(170px,38vw)}
 }
+
+/* ---------- Illustrated welcome screen ---------- */
+body.welcome-active {
+  overflow: hidden;
+  background: #bdeaff;
+}
+body.welcome-active #muteBtn { display: none; }
+#app.welcome-mode {
+  max-width: none;
+  width: 100vw;
+  height: 100svh;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.welcome-screen {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(#aee6ff,#dff7ff);
+}
+.welcome-art-wrap {
+  position: relative;
+  width: min(100vw, calc(100svh * 1.5));
+  aspect-ratio: 3 / 2;
+  max-height: 100svh;
+  overflow: hidden;
+  box-shadow: 0 0 36px rgba(74,67,99,.18);
+}
+.welcome-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+.welcome-hotspot {
+  position: absolute;
+  z-index: 5;
+  padding: 0;
+  background: transparent;
+  border-radius: 28px;
+  color: transparent;
+  box-shadow: none;
+  touch-action: manipulation;
+}
+.welcome-hotspot span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.welcome-hotspot:active {
+  background: rgba(255,255,255,.15);
+  transform: scale(.98);
+}
+.welcome-hotspot:focus-visible {
+  outline: 5px solid rgba(255,255,255,.95);
+  outline-offset: 3px;
+}
+/* Hotspots align to the painted controls in the 1536x1024 welcome PNG. */
+.random-hotspot { left: 22.5%; top: 87.0%; width: 20.2%; height: 9.2%; }
+.map-hotspot { left: 43.5%; top: 87.0%; width: 18.0%; height: 9.2%; }
+.collection-hotspot { left: 62.5%; top: 87.0%; width: 19.5%; height: 9.2%; }
+.sound-hotspot { left: 92.0%; top: 1.6%; width: 5.9%; height: 8.8%; border-radius: 50%; }
+
+/* ---------- Map / collection pages ---------- */
+.page-topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 2px 0 18px;
+}
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+.page-title > span { font-size: 2.2rem; }
+.page-title h1 { margin: 0; font-size: clamp(1.7rem,4vw,2.5rem); }
+.page-title p { margin: 2px 0 0; color: var(--soft); }
+.collection-coins {
+  background: #fff;
+  box-shadow: var(--shadow);
+  padding: 10px 15px;
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.collection-summary {
+  background: linear-gradient(160deg,#fff,var(--pink));
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  text-align: center;
+}
+.collection-summary b { font-size: 1.7rem; }
+.collection-summary span { color: var(--soft); }
+.collection-truck img { width: 140px; max-height: 90px; object-fit: contain; }
+.collection-grid .upgrade-card { min-height: 132px; }
+.collection-grid .upgrade-card:not(.owned) { opacity: .72; filter: none; background: linear-gradient(160deg,#fff,#eee8f7); }
+.collection-tip { text-align: center; color: var(--soft); font-weight: 600; }
+
+@media (orientation: portrait) {
+  .welcome-art-wrap {
+    width: 100vw;
+    height: auto;
+  }
+}
+@media (max-width: 600px) {
+  .page-topbar { align-items: flex-start; }
+  .page-title p { display: none; }
+  .collection-coins { font-size: .9rem; }
+}

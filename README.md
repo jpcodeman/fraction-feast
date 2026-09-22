@@ -36,3 +36,12 @@ Deploy the folder to any HTTPS static host (GitHub Pages works well), open it in
 ## Updating
 
 When changing cached files, bump the cache name near the top of `sw.js` so an installed copy refreshes cleanly.
+
+## Welcome screen navigation
+The app now opens on the illustrated Fraction Feast welcome screen. The painted controls are live buttons:
+- **Random Level** starts one of the nine stops at random.
+- **Map** opens the level-selection map.
+- **My Collection** opens the treasure collection/shop, where earned coins can be spent on truck upgrades.
+- The painted speaker toggles the generated background music.
+
+The welcome artwork is cached by the service worker for offline iPad/PWA use.
