@@ -16,7 +16,7 @@
   };
 
   const STORE_KEY = 'fractionFeast.v2';
-  const DEFAULT_STATE = { coins: 0, served: 0, worlds: {}, upgrades: [], muted: false };
+  const DEFAULT_STATE = { coins: 0, served: 0, worlds: {}, upgrades: [], days: {}, muted: false };
 
   function loadState() {
     try {
@@ -32,6 +32,9 @@
   }
 
   let state = loadState();
+  if (!state.days) state.days = {};
+
+  const todayStr = () => new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 
   const CUSTOMERS = ['🐶', '🐱', '🐰', '🦊', '🐼', '🐨', '🦁', '🐯', '🐸', '🐵', '🐷', '🐮'];
   const WORLDS = [
@@ -123,6 +126,15 @@
   function renderMap() {
     setScreen('map');
     const totalStars = Object.values(state.worlds).reduce((sum, n) => sum + Number(n || 0), 0);
+    const days = state.days || {};
+    const historyRows = WORLDS.map((w, i) => {
+      const list = days[i] || [];
+      if (!list.length) return '';
+      const counts = {};
+      list.forEach(d => { counts[d] = (counts[d] || 0) + 1; });
+      const txt = Object.keys(counts).map(d => d + (counts[d] > 1 ? ` (×${counts[d]})` : '')).join(' · ');
+      return `<div class="history-row"><div class="history-world">${w.emoji} ${w.name}</div><div class="history-dates">${txt}</div></div>`;
+    }).filter(Boolean).join('');
     app.innerHTML = `
       <div class="page-topbar">
         <button id="welcomeBtn" class="back-btn" aria-label="Back to welcome screen">←</button>
@@ -139,13 +151,21 @@
       <div class="worlds">
         ${WORLDS.map((w, i) => {
           const wins = Number(state.worlds[i] || 0);
+          const list = days[i] || [];
+          const lastDay = list.length ? list[list.length - 1] : '';
           return `<button class="world tint${i % 5}" data-world="${i}">
             <div class="emoji">${w.emoji}</div>
             <h3>${w.name}</h3>
             <small>${w.skill}</small>
             <div class="stars">${wins ? '⭐ ' + wins + (wins === 1 ? ' rush' : ' rushes') : 'Ready to play!'}</div>
+            ${lastDay ? `<div class="world-lastday">📅 last: ${lastDay}</div>` : ''}
           </button>`;
         }).join('')}
+      </div>
+
+      <div class="section">📅 Days Completed</div>
+      <div class="level-history">
+        ${historyRows || '<div class="history-empty">No rushes finished yet — pick a stop above to start! 🌟</div>'}
       </div>
     `;
 
@@ -210,7 +230,7 @@
     document.getElementById('resetBtn').addEventListener('click', () => {
       if (confirm('Reset all Fraction Feast progress?')) {
         const muted = state.muted;
-        state = { coins: 0, served: 0, worlds: {}, upgrades: [], muted };
+        state = { coins: 0, served: 0, worlds: {}, upgrades: [], days: {}, muted };
         saveState();
         renderCollection();
       }
@@ -775,6 +795,9 @@
 
     function finishWorld() {
       state.worlds[worldIndex] = Number(state.worlds[worldIndex] || 0) + 1;
+      if (!state.days) state.days = {};
+      if (!state.days[worldIndex]) state.days[worldIndex] = [];
+      state.days[worldIndex].push(todayStr());
       const bonus = session.score >= 7 ? 10 : 5;
       state.coins += bonus;
       saveState();

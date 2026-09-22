@@ -1,4 +1,4 @@
-const CACHE = 'fraction-feast-v4';
+const CACHE = 'fraction-feast-v5';
 const ASSETS = [
   './', './index.html', './css/styles.css', './js/game.js', './js/audio.js',
   './manifest.webmanifest', './assets/welcome.png', './icons/icon.svg', './icons/icon-192.png',
