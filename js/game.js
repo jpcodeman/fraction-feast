@@ -51,8 +51,11 @@
 
   const UPGRADES = [
     ['🪩', 'Disco Ball'], ['🤖', 'Robot Chef'], ['🐶', 'Puppy Waiter'],
-    ['🌈', 'Rainbow Oven'], ['🐠', 'Aquarium'], ['🏆', 'Golden Mixer']
+    ['🌈', 'Rainbow Oven'], ['🐠', 'Aquarium'], ['🏆', 'Golden Mixer'],
+    ['🎡', 'Ferris Wheel'], ['🚀', 'Rocket Booster'], ['🦄', 'Unicorn Mascot'],
+    ['🍦', 'Ice Cream Machine'], ['🎆', 'Firework Show'], ['🐉', 'Dragon Grill']
   ];
+  const TREASURE_COST = 100;
 
   function startAudio() {
     if (!state.muted && window.Music) Music.ensureStarted();
@@ -176,6 +179,35 @@
     window.scrollTo(0, 0);
   }
 
+  function celebrateTreasure(index) {
+    const [emoji, name] = UPGRADES[index];
+    const colors = ['#ff6ec7', '#ffd93b', '#6ec1ff', '#8affc1', '#c79bff', '#ff9f5a'];
+    const confetti = Array.from({ length: 28 }, () => {
+      const c = colors[rand(colors.length)];
+      const left = Math.floor(Math.random() * 100);
+      const delay = (Math.random() * 0.5).toFixed(2);
+      const dur = (1.6 + Math.random() * 1.3).toFixed(2);
+      const rot = Math.floor(Math.random() * 360);
+      return `<span class="confetti-piece" style="left:${left}%;background:${c};animation-delay:${delay}s;animation-duration:${dur}s;transform:rotate(${rot}deg)"></span>`;
+    }).join('');
+    const overlay = document.createElement('div');
+    overlay.className = 'treasure-celebration';
+    overlay.innerHTML = `
+      <div class="celebration-confetti">${confetti}</div>
+      <div class="celebration-card">
+        <div class="celebration-title">🎉 New Treasure! 🎉</div>
+        <div class="celebration-burst"><span class="celebration-emoji">${emoji}</span></div>
+        <div class="celebration-name">${name}</div>
+        <div class="celebration-sub">added to your collection</div>
+        <button class="serve-btn celebration-btn">Awesome!</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const close = () => overlay.remove();
+    overlay.querySelector('.celebration-btn').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  }
+
   function renderCollection() {
     setScreen('collection');
     const ownedCount = state.upgrades.length;
@@ -198,11 +230,11 @@
           return `<button class="upgrade-card ${owned ? 'owned' : ''}" data-upgrade="${i}">
             <span class="upgrade-emoji">${owned ? u[0] : '❓'}</span>
             <b>${owned ? u[1] : 'Mystery Treasure'}</b>
-            <small>${owned ? 'Collected ✓' : coinMarkup() + ' 30 to unlock'}</small>
+            <small>${owned ? 'Collected ✓' : coinMarkup() + ' ' + TREASURE_COST + ' to unlock'}</small>
           </button>`;
         }).join('')}
       </div>
-      <p class="collection-tip">Tap a mystery treasure to buy it for ${coinMarkup()} 30.</p>
+      <p class="collection-tip">Tap a mystery treasure to buy it for ${coinMarkup()} ${TREASURE_COST}.</p>
       <div class="small-actions"><button id="resetBtn" class="link-btn">Reset progress</button></div>
     `;
 
@@ -214,16 +246,16 @@
           toast(`${UPGRADES[i][1]} is already in your collection!`);
           return;
         }
-        if (state.coins < 30) {
-          toast('You need 30 coins for that treasure!');
+        if (state.coins < TREASURE_COST) {
+          toast(`You need ${TREASURE_COST} coins for that treasure!`);
           return;
         }
-        state.coins -= 30;
+        state.coins -= TREASURE_COST;
         state.upgrades.push(i);
         saveState();
-        if (window.Music) Music.chime('good');
+        if (window.Music) Music.chime('win');
         renderCollection();
-        toast(`You unlocked ${UPGRADES[i][0]} ${UPGRADES[i][1]}!`);
+        celebrateTreasure(i);
       });
     });
 
