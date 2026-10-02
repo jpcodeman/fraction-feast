@@ -681,13 +681,21 @@
     }
 
     function renderOrder(problem) {
+      const common = problem.values.reduce((m, f) => m * f[1] / gcd(m, f[1]), 1);
       shell(problem, `
         <section class="work-card">
           <div class="order-tray" id="orderTray">
             <span>1st</span><span>2nd</span><span>3rd</span>
           </div>
           <div class="order-picks">
-            ${shuffle(problem.values).map((f, i) => `<button class="order-pick numeric-order-pick" data-frac="${f[0]}/${f[1]}" data-pick="${i}"><b class="fraction-number">${fracLabel(f)}</b></button>`).join('')}
+            ${shuffle(problem.values).map((f, i) => `
+              <div class="order-pick-wrap">
+                <button class="order-pick numeric-order-pick" data-frac="${f[0]}/${f[1]}" data-pick="${i}"><b class="fraction-number">${fracLabel(f)}</b></button>
+                <details class="common-denom">
+                  <summary>Common denominator</summary>
+                  <b>${f[0] * (common / f[1])}/${common}</b>
+                </details>
+              </div>`).join('')}
           </div>
           <button id="clearOrder" class="secondary-btn">Start over</button>
         </section>
